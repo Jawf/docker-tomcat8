@@ -46,7 +46,12 @@ ENV PATH $PATH:$CATALINA_HOME/bin
 EXPOSE 8080
 EXPOSE 8009
 VOLUME "/opt/tomcat/webapps"
+VOLUME "/upload"
 WORKDIR /opt/tomcat
+
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo 'Asia/Shanghai' >/etc/timezone
+ADD *.war /opt/tomcat/webapps/
 
 # Launch Tomcat
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
